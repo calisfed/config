@@ -1,99 +1,81 @@
 # Archivation
+
 Moving all dotfiles, configs to [here](https://github.com/calisfed/config) with respective branch
-# Setup new Windows <!-- omit in toc -->
 
-Following the order
 
-- [Install clean Windows 10 ISO file](#install-clean-windows-10-iso-file)
-- [Windows Debloater](#windows-debloater)
-- [Windows Terminal](#windows-terminal)
-- [TranslucentTB](#translucenttb)
-- [Brave [Browser]](#brave-browser)
-- [7zip](#7zip)
-- [Explorer Patcher](#explorer-patcher)
-- [Unikey](#unikey)
-- [Included Folders](#included-folders)
-  - [Background_Images folder](#background_images-folder)
-  - [Cheatsheets folder](#cheatsheets-folder)
-  - [Scrips folder](#scrips-folder)
-  - [Regfiles folder](#regfiles-folder)
-  - [Others folder](#others-folder)
-- [Optional](#optional)
-  - [Clink](#clink)
-  - [Equalizer APO and HeSuVi](#equalizer-apo-and-hesuvi)
-  - [Shell menu view](#shell-menu-view)
+# SETUP .dotfiles FOLDER <!-- omit in toc -->
 
-## Install clean Windows 10 ISO file
 
-1. Go to
-[Windows 10 ISO](https://www.microsoft.com/en-us/software-download/windows10ISO)
+1. [WSL2 + Ubuntu 22.04](#wsl2-+-ubuntu-22.04)
+2. [Update apt, install build essential, and auto remove](#update-apt,-install-build-essential,-and-auto-remove)
+3. [Cloning this repo](#cloning-this-repo)
+4. [Install Starship](#install-starship)
+5. [Install Rust Programming Language](#install-rust-programming-language)
+6. [Install nvm](#install-nvm)
+7. [Use Astro](#use-astro)
+8. [Use Svelte + Rust wasm](#use-svelte-+-rust-wasm)
 
-2. Then press `F12`, change device to a mobile device.
+## WSL2 + Ubuntu 22.04
 
-3. Then download clean, fresh ISO file.
+1. Install `Windows Terminal` through Microsoft Store
+2. Run this command to install WSL [Windows Subsystem for Linux]
 
-4. After install, update all updates before use debloater.
+```bash
 
-## Windows Debloater
+wsl --install
 
-1. Get this from this repo [Window Debloater](https://github.com/Sycnex/Windows10Debloater) or use the version in the [Script Folder](https://github.com/calisfed/winsetup/blob/master/Scipts/)
 
-2. Run the `GUI` powershell file
-
-3. White list these
-
-```md
-Store
-Paint
-Notepad
 ```
 
-After debloated, update `Microsoft Store`
+3. Reset computer
+4. Run update WSL to get WSL2
 
-## Windows Terminal
+```bash
 
-Install from `Microsoft Store`
-Some code to run 
-
-```md 
-# Update
 wsl --update
-# Set default version
-wsl --set-default-version 2
+
+
 ```
 
-## TranslucentTB
+5. Go to Microsoft Store, find `Ubuntu 22.04` and install it
+6. Run `Ubuntu 22.04` from Start to setup username, password,...
 
-Download from `Microsoft Store`
+## Update apt, install build essential, and auto remove
 
-## Brave [Browser]
+```bash
 
-Download [Brave](https://brave.com/)
+# Update and upgrade [with yes to all]
+sudo apt update && sudo apt upgrade -y
+# Install essentials for build in Ubuntu
+sudo apt-get install build-essential
+# Install things for display
+sudo apt-get install pkg-config libssl-dev
+# Remove no longer needed packages
+sudo apt autoremove
 
-In order to use Brave rewards, use [Tunnel Bear](https://www.tunnelbear.com/) and change to [supported regions](https://brave.com/transparency/). One way to have data is to share about Tunnel Bear on Twitter for 1Gb each. An other way is to ask [Giang Trung](https://www.facebook.com/giangnguyen.thanhtrung) for Tunnel Bear account.
+# Install Neovim
+sudo add-apt-repository ppa:neovim-ppa/stable
+sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo apt-get update
+sudo apt-get install neovim
 
-## 7zip
 
-Download and install [7zip](https://www.7-zip.org/)
+# Install these libraries for GUI application
+sudo apt-get install libx11-xcb1 libx11-xcb-dev libegl-dev
+sudo apt-get install libgtk-3-dev
+sudo apt-get install libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libspeechd-dev libxkbcommon-dev libssl-dev
+sudo apt-get install libfontconfig-dev
+# Install libxcb1-dev package for Debian/Ubuntu* and libxcb-devel package for Fedora/openSUSE/Void Linux.
 
-## Explorer Patcher
-
-Download and install[Explorer Patcher](https://github.com/valinet/ExplorerPatcher)
-
-## Unikey
-
-Download and run [Unikey](https://www.unikey.org/)
-
-## Vsial Studio Code
-
-Download and install [Visual Studio Code](https://code.visualstudio.com/download)
-
-## WSL env variable
+```
 
 In Windows you need to update the `WSLENV` environment variable to include the value `GIT_EXEC_PATH/wp`. From an Administrator Command Prompt run the following:
 
-```cmd
+```bash
+
 SETX WSLENV %WSLENV%:GIT_EXEC_PATH/wp
+
+
 ```
 
 After updating the `WSLENV` environment variable, restart your WSL installation.
@@ -102,121 +84,122 @@ After updating the `WSLENV` environment variable, restart your WSL installation.
 
 Change remote url if needed
 
-```sh
+```bash
 git remote set-url origin git@github.com:USERNAME/REPOSITORY.git
 ```
 
----
----
+## Cloning this repo
 
-## Included Folders
+[Tut here](https://www.atlassian.com/git/tutorials/dotfiles)
 
-### Background_Images folder
+```bash
 
-Set them as background.
->_The formula is the sound intensity_
+git clone --bare  https://github.com/calisfed/.cascfg $HOME/.cascfg
 
-![Sound intensity](https://github.com/calisfed/winsetup/blob/main/Background_Images/bg1.jpg)
-
->_Peaceful Staircase in the wood_
-
-![Peaceful Staircase in the wood](https://github.com/calisfed/winsetup/blob/main/Background_Images/bg2.jpg)
-
-### Cheatsheets folder
-
-The name says it all
-Included
-
-```md
-Git 
-Rust
-Linux
-Ubuntu
 ```
 
-### Scrips folder
+Checkout the actual content from the bare repository to your `$HOME`
 
-Install version 365 with the script
+```bash
 
-Then convert into Mondo with Active AIO, and activate it
+cas checkout
 
-### Regfiles folder
-
-1. Intelppm: Change Start to one of these values
-
-    - `3` for **variable** max cpu speed
-    - `4` for **constant** max cpu speed
-
-2. Windef: Turn off Windows Defender, should turn off on `Start up` in `Task Manager` too
-
-3. Others does what its name said
-
-### Others folder
-
-#### Draw <!-- omit in toc -->
-
-This zip file contains manythings, i.e. drivers for tablet, some basic tutorials
-
-#### numix_cursor <!-- omit in toc -->
-
-This cursor style is nice, remember to set size to `2` and scroll `6` lines a time
-
-##### Godmode <!-- omit in toc -->
-
-This folder can access all windows features
-
-#### WSL VSCode shortcut <!-- omit in toc -->
-
-A Windows shortcut to start VSCode in $HOME
-
-#### Fonts <!-- omit in toc -->
-
-Install for All users
->**Note**: These fonts used for coding and Dota2
-
-Included:
-
-```md
-Fira Nerd Fonts
-Fira Mono Nerd Fonts
-Arial Unicode Font
-Handwritten
 ```
 
----
----
+The step above might fail with a message like:
 
-## Optional
+```bash
 
-### Clink
+error: The following untracked working tree files would be overwritten by checkout:
+    .bashrc
+    .gitignore
+Please move or remove them before you can switch branches.
+Aborting
 
-Download [Clink](https://github.com/chrisant996/clink)
+```
 
-Download [Clink complettion](https://github.com/vladimir-kotikov/clink-completions), extract to a folder, should put it inside clink folder C:\Program Files(x86)\clink
+This is because your $HOME folder might already have some stock configuration files which would be overwritten by Git. The solution is simple: back up the files if you care about them, remove them if you don't care.
 
-Download [clink fzf](https://github.com/chrisant996/clink-fzf) and [fzf](https://github.com/junegunn/fzf)
+Run this line to set the flag showUntrackedFiles to no on this specific (local) repository
 
-Download [Clink Flexprompt](https://github.com/chrisant996/clink-flex-prompt) and extract it in the Completion folder above
+```bash
 
+cas config --local status.showUntrackedFiles no
 
-
-Clink setting
-
-```sh
-clink set clink.logo none
-clink install scripts <put_dir_name_here>
-clink set fzf.exe_location <put_dir_name_here>
-clink set fzf.default_bindings true
-flexprompt configure
 ```
 
 
-### Equalizer APO and HeSuVi
+>**WARNING:**
+Only proceed this part below after cloned this repo 
 
-[Equalizer APO](https://sourceforge.net/projects/equalizerapo/)
+## Install Starship
 
-[HeSuVi](https://sourceforge.net/projects/hesuvi/)
+```bash
+curl -sS https://starship.rs/install.sh | sh
+```
 
-### Shell menu view
+## Install Rust Programming Language
 
-[Shell menu view](http://www.nirsoft.net/utils/shell_menu_view.html)
+Watch tutorial [here](https://www.rust-lang.org/learn/get-started) if needed
+
+```bash
+# Install rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# Install rust-analyzer (if using Lapce)
+https://github.com/rust-lang/rust-analyzer
+# Install cargo binstall
+https://github.com/cargo-bins/cargo-binstall
+# Insta;; Mingw-w64
+sudo apt -y install mingw-w64
+# Add target triple
+rustup target add x86_64-pc-windows-gnu
+
+# Install fnm (if using nushell)
+https://github.com/Schniz/fnm
+```
+
+Go to `#HOME/.cargo` and create new file called `Config.toml`. Then add some config.
+
+`Config.toml` should look like this
+
+```toml
+[alias]
+b_win = "build --target x86_64-pc-windows-gnu"
+b_lnx = "build --target x86_64-unknown-linux-gnu"
+[build]
+```
+
+## Install nvm
+
+Install nvm with this [tutorial](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl)
+
+```bash
+# Install nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+# Log out and log in again before use the command below
+# Check if nvm installed. It should return 'nvm'
+command -v nvm
+# Install Node LTS verion
+nvm install --lts
+# Install newest Node version
+nvm install node
+# Select Newest version as default, change to LTS with 'nvm use lts'
+nvm use node
+```
+
+## Use Astro
+
+[Learn Astro here](https://docs.astro.build/en/getting-started/)
+
+```bash
+# Create new project with astro
+npm create astro@latest
+```
+
+## Use Svelte + Rust wasm
+
+```bash
+git clone "https://github.com/calisfed/sveltekit-rust-wasm"
+
+```
+
