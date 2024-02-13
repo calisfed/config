@@ -1,0 +1,11 @@
+ls
+^ls
+^bash ls
+^bash ^ls
+^ls
+^bash "ls"
+ls
+eza --icons --color auto -1 --tree
+ls
+nvim .config/hypr/
+zsh

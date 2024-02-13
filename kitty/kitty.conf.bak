@@ -1,0 +1,16 @@
+font_family	FiraCodeNerdFont
+
+font_size	14
+
+enable_audio_bell	no
+
+tab_bar_style	powerline
+
+background_opacity 0.5
+background_blur 5
+
+
+# BEGIN_KITTY_THEME
+# Flatland
+include current-theme.conf
+# END_KITTY_THEME
