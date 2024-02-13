@@ -1,0 +1,43 @@
+config nu
+wsl
+starship
+winget install starship
+wsl
+wsl --shutdown
+wsl -; -v
+wsl -l -v
+wsl
+$0
+code ~
+wsl
+$0
+$nu.os-info
+wsl
+$nu.os-info
+wsl
+wsl -l
+wsl -l -v
+wsl
+~
+pwd
+wsl
+wsl --shutdown
+wsl
+$nu.os-info
+wsl
+ls
+wsl
+wsl --shutdown
+wsl
+env.USER
+$env.USER
+$env
+wsl
+starship
+starship init nu | save ~/.config/starship_init.nu
+source ~/.config/starship_init.nu
+wsl
+sl
+wsl
+wsl --shutdown
+wsl

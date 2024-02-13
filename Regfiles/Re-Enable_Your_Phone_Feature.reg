@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+; created by Brady Gavin
+; for How-To Geek
+; article: https://www.howtogeek.com/396012/how-to-disable-the-your-phone-linking-feature-on-windows-10/
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]
+"EnableMmx"=dword:00000001
