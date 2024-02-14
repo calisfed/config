@@ -1,205 +1,64 @@
-# Archivation
+# NixOS Config
 
-Moving all dotfiles, configs to [here](https://github.com/calisfed/config) with respective branch
+<img src=preview.png/>
 
+<p align=center> <b>Minimal Sway NixOS rice with full silent boot</b> </p>
 
-# SETUP .dotfiles FOLDER <!-- omit in toc -->
-
-
-1. [WSL2 + Ubuntu 22.04](#wsl2-+-ubuntu-22.04)
-2. [Update apt, install build essential, and auto remove](#update-apt,-install-build-essential,-and-auto-remove)
-3. [Cloning this repo](#cloning-this-repo)
-4. [Install Starship](#install-starship)
-5. [Install Rust Programming Language](#install-rust-programming-language)
-6. [Install nvm](#install-nvm)
-7. [Use Astro](#use-astro)
-8. [Use Svelte + Rust wasm](#use-svelte-+-rust-wasm)
-
-## WSL2 + Ubuntu 22.04
-
-1. Install `Windows Terminal` through Microsoft Store
-2. Run this command to install WSL [Windows Subsystem for Linux]
-
-```bash
-
-wsl --install
-
-
+## Installation
+Install nixos with this guide (make sure to use systemd boot) <br/>
+https://nixos.org/manual/nixos/stable/ <br/>
+Clone this repository (logged in as user) <br/>
 ```
-
-3. Reset computer
-4. Run update WSL to get WSL2
-
-```bash
-
-wsl --update
-
-
+cd ~
 ```
-
-5. Go to Microsoft Store, find `Ubuntu 22.04` and install it
-6. Run `Ubuntu 22.04` from Start to setup username, password,...
-
-## Update apt, install build essential, and auto remove
-
-```bash
-
-# Update and upgrade [with yes to all]
-sudo apt update && sudo apt upgrade -y
-# Install essentials for build in Ubuntu
-sudo apt-get install build-essential
-# Install things for display
-sudo apt-get install pkg-config libssl-dev
-# Remove no longer needed packages
-sudo apt autoremove
-
-# Install Neovim
-sudo add-apt-repository ppa:neovim-ppa/stable
-sudo add-apt-repository ppa:neovim-ppa/unstable
-sudo apt-get update
-sudo apt-get install neovim
-
-
-# Install these libraries for GUI application
-sudo apt-get install libx11-xcb1 libx11-xcb-dev libegl-dev
-sudo apt-get install libgtk-3-dev
-sudo apt-get install libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libspeechd-dev libxkbcommon-dev libssl-dev
-sudo apt-get install libfontconfig-dev
-# Install libxcb1-dev package for Debian/Ubuntu* and libxcb-devel package for Fedora/openSUSE/Void Linux.
-
 ```
-
-In Windows you need to update the `WSLENV` environment variable to include the value `GIT_EXEC_PATH/wp`. From an Administrator Command Prompt run the following:
-
-```bash
-
-SETX WSLENV %WSLENV%:GIT_EXEC_PATH/wp
-
-
+git clone https://github.com/smravec/nixos-config
 ```
-
-After updating the `WSLENV` environment variable, restart your WSL installation.
-
->**Note**: ssh link look like this git@github.com:USERNAME/REPOSITORY.git
-
-Change remote url if needed
-
-```bash
-git remote set-url origin git@github.com:USERNAME/REPOSITORY.git
+### Nixos
+Go to ``nixos/networking/networks.nix`` and setup wifi (in the cloned repository) <br/>
+Copy ``/etc/nixos/hardware-configuration.nix`` to ``nixos/hardware-optimization``
 ```
-
-## Cloning this repo
-
-[Tut here](https://www.atlassian.com/git/tutorials/dotfiles)
-
-```bash
-
-git clone --bare  https://github.com/calisfed/.cascfg $HOME/.cascfg
-
+cp /etc/nixos/hardware-configuration.nix ~/nixos-config/nixos/hardware-optimization/
 ```
-
-Checkout the actual content from the bare repository to your `$HOME`
-
-```bash
-
-cas checkout
-
+Symlink this repository to ``/etc`` <br/>
 ```
-
-The step above might fail with a message like:
-
-```bash
-
-error: The following untracked working tree files would be overwritten by checkout:
-    .bashrc
-    .gitignore
-Please move or remove them before you can switch branches.
-Aborting
-
+cd /etc
 ```
-
-This is because your $HOME folder might already have some stock configuration files which would be overwritten by Git. The solution is simple: back up the files if you care about them, remove them if you don't care.
-
-Run this line to set the flag showUntrackedFiles to no on this specific (local) repository
-
-```bash
-
-cas config --local status.showUntrackedFiles no
-
 ```
-
-
->**WARNING:**
-Only proceed this part below after cloned this repo 
-
-## Install Starship
-
-```bash
-curl -sS https://starship.rs/install.sh | sh
+sudo rm -rf nixos
 ```
-
-## Install Rust Programming Language
-
-Watch tutorial [here](https://www.rust-lang.org/learn/get-started) if needed
-
-```bash
-# Install rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-# Install rust-analyzer (if using Lapce)
-https://github.com/rust-lang/rust-analyzer
-# Install cargo binstall
-https://github.com/cargo-bins/cargo-binstall
-# Insta;; Mingw-w64
-sudo apt -y install mingw-w64
-# Add target triple
-rustup target add x86_64-pc-windows-gnu
-
-# Install fnm (if using nushell)
-https://github.com/Schniz/fnm
 ```
-
-Go to `#HOME/.cargo` and create new file called `Config.toml`. Then add some config.
-
-`Config.toml` should look like this
-
-```toml
-[alias]
-b_win = "build --target x86_64-pc-windows-gnu"
-b_lnx = "build --target x86_64-unknown-linux-gnu"
-[build]
+sudo ln -s ~/nixos-config/nixos/ .
 ```
-
-## Install nvm
-
-Install nvm with this [tutorial](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl)
-
-```bash
-# Install nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-# Log out and log in again before use the command below
-# Check if nvm installed. It should return 'nvm'
-command -v nvm
-# Install Node LTS verion
-nvm install --lts
-# Install newest Node version
-nvm install node
-# Select Newest version as default, change to LTS with 'nvm use lts'
-nvm use node
+Rebuild your system
 ```
-
-## Use Astro
-
-[Learn Astro here](https://docs.astro.build/en/getting-started/)
-
-```bash
-# Create new project with astro
-npm create astro@latest
+sudo nixos-rebuild switch
 ```
-
-## Use Svelte + Rust wasm
-
-```bash
-git clone "https://github.com/calisfed/sveltekit-rust-wasm"
-
+### Home manager
+Download home-manager standalone ( after adding the home-manager channel reboot to refresh the $NIX_PATH var ) <br/>
+https://nix-community.github.io/home-manager/index.html#sec-install-standalone <br/>
+Symlink ``home-manager`` directory to ``~/.config`` <br/>
 ```
-
+cd ~/.config
+```
+```
+rm -rf nixpkgs
+```
+```
+ln -s ~/nixos-config/home-manager/ nixpkgs
+```
+Add unstable channel <br/>
+https://nix-community.github.io/home-manager/index.html#_how_do_i_install_packages_from_nixpkgs_unstable <br/>
+Rebuild home-manager
+```
+home-manager switch
+```
+### Sway
+Symlink sway config <br/>
+```
+cd ~/.config
+```
+```
+ln -s ~/nixos-config/nixos/wayland/sway/ .
+```
+***PS: This config is made for the Framework laptop 11th gen***
